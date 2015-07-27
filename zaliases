@@ -1,0 +1,14 @@
+alias ls="ls --color=auto"
+alias a=ls
+alias grep="grep --color=auto"
+alias t=tmux
+alias cdemus='cdemu -b system'
+alias sbcl='rlwrap sbcl'
+alias scheme48='rlwrap scheme48'
+# alias cp='cp --reflink=auto'
+alias wifi="sudo netcfg"
+alias wired='sudo dhcpcd eth0'
+alias emc='emacsclient -nw'
+alias e='emacsclient -nw'
+alias tetemc='ssh tethys -t emacsclient -nw'
+alias exin='exec startx'
