@@ -1,3 +1,4 @@
+; -*- emacs-lisp -*-
 (require 'cl)
 
 ;;; Error handling for the terminally lazy.
@@ -273,6 +274,10 @@
 
 ;;; SML
 (add-to-list 'auto-mode-alist '("\\.fun$" . sml-mode))
+(setq-default sml-indent-level 3)
+(add-hook 'sml-mode-hook
+          (lambda ()
+            (setq indent-tabs-mode nil)))
 
 ;;; Agda
 (load-file (let ((coding-system-for-read 'utf-8))
