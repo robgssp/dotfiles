@@ -4,7 +4,7 @@ export PATH_="$PATH"
 
 export GOPATH="$HOME/go"
 
-export EDITOR="emacsclient -c"
+export EDITOR=emacs
 export VISUAL=$EDITOR
 
 export WINEARCH=win32
