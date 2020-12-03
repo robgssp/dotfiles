@@ -18,8 +18,7 @@
 ;;; Packages
 (try (require 'package)
      (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                              ("marmalade" . "https://marmalade-repo.org/packages/")
-                              ("melpa" . "http://melpa.milkbox.net/packages/")))
+                              ("melpa" . "http://melpa.org/packages/")))
      (package-initialize))
 
 ;;; Fonts
@@ -32,10 +31,10 @@
 (setq read-file-name-completion-ignore-case t)
 
 ;;; Color scheme
-(add-to-list 'custom-theme-load-path "~/build/emacs-color-theme-solarized")
-(setq frame-background-mode 'dark)
-(load-theme 'solarized t)
-(enable-theme 'solarized)
+;; (add-to-list 'custom-theme-load-path "~/build/emacs-color-theme-solarized")
+;; (setq frame-background-mode 'dark)
+;; (load-theme 'solarized t)
+;; (enable-theme 'solarized)
 
 ;;; Fixed tabs
 (setq-default indent-tabs-mode t)
@@ -43,7 +42,7 @@
 (setq c-default-style "linux"
       c-basic-offset 8)
 
-(smart-tabs-insinuate 'c 'javascript)
+;; (smart-tabs-insinuate 'c 'javascript)
 
 (c-add-style "myc++"
              '("bsd"
@@ -86,8 +85,6 @@
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
 (add-to-list 'load-path "~/emacs")
-(let ((default-directory "~/Programs/share/emacs/site-lisp"))
-  (normal-top-level-add-subdirs-to-load-path))
 (autoload 'mu4e "mu4e" nil t)
 
 ;;; General lispy stuffs
@@ -279,10 +276,6 @@
           (lambda ()
             (setq indent-tabs-mode nil)))
 
-;;; Agda
-(load-file (let ((coding-system-for-read 'utf-8))
-             (shell-command-to-string "agda-mode locate")))
-
 ;;; Org mode
 (eval-after-load "org-mode"
   '(progn (require 'ox)
@@ -307,6 +300,9 @@
  '(geiser-repl-read-only-prompt-p nil)
  '(hindent-style "chris-done")
  '(idris-interpreter-path "~/.local/bin/idris")
+ '(package-selected-packages
+   (quote
+    (erlang yaml-mode solarized-theme sml-mode slime scad-mode paredit nix-mode lua-mode haskell-mode)))
  '(smtpmail-smtp-server "smtp.gmail.com")
  '(smtpmail-smtp-service 25))
 (custom-set-faces
