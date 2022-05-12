@@ -1,5 +1,5 @@
 ; -*- emacs-lisp -*-
-(require 'cl)
+(require 'cl-lib)
 
 ;;; Error handling for the terminally lazy.
 ;;; This ends up wrapping quite a lot since I want to copy this file
@@ -76,16 +76,38 @@
       (kill-new filename)
       (message "Copied file name '%s' to the kill ring." filename))))
 
-(define-key global-map (kbd "C-x w") 'other-window-back)
+;;; Sort sequence alphabetically
+(defun sort-words (reverse beg end)
+  "Sort words in region alphabetically, in REVERSE if negative.
+    Prefixed with negative \\[universal-argument], sorts in reverse.
 
-;;; Eshell stuff
-(define-key global-map (kbd "C-x t") 'eshell)
+    The variable `sort-fold-case' determines whether alphabetic case
+    affects the sort order.
 
-;;; indent correctly on enter
+    See `sort-regexp-fields'."
+  (interactive "*P\nr")
+  (sort-regexp-fields reverse "\\S-+" "\\&" beg end))
+
+
+;;; Global keybindings
+
 (define-key global-map (kbd "RET") 'newline-and-indent)
+(define-key global-map (kbd "C-x t") 'eshell)
+(define-key global-map [C-tab] 'completion-at-point)
+(define-key global-map (kbd "C-w") 'backward-kill-word)
+(define-key global-map (kbd "C-x C-k") 'kill-region)
+(define-key global-map (kbd "C-x w") 'other-window-back)
+(global-set-key (kbd "C-c l") #'org-store-link)
+(global-set-key (kbd "C-c a") #'org-agenda)
+(global-set-key (kbd "C-c c") #'org-capture)
+
+;;; Completion
+(ivy-mode)
+
+;;; Mail
+(autoload 'mu4e "mu4e" nil t)
 
 (add-to-list 'load-path "~/emacs")
-(autoload 'mu4e "mu4e" nil t)
 
 ;;; General lispy stuffs
 
@@ -109,11 +131,13 @@
 
 ;;; SLIME setup
 (setq-default inferior-lisp-program "sbcl")
+(setq-default slime-contribs '(slime-fancy slime-asdf slime-scratch slime-mrepl))
 (autoload 'slime "slime" nil t)
 (autoload 'slime-connect "slime" nil t)
 (autoload 'slime-mode "slime" nil t)
 (eval-after-load "slime"
-  '(slime-setup '(slime-fancy slime-asdf slime-scratch)))
+  '(progn (define-key slime-mode-map [C-tab] 'slime-complete-symbol)
+          (define-key slime-editing-map [C-tab] 'slime-complete-symbol)))
 
 ;;; Hexl Mode
 (add-hook 'hexl-mode-hook
@@ -156,15 +180,6 @@
              (setq c-basic-offset 4
                    indent-tabs-mode nil)
              (add-hook 'before-save-hook 'gofmt-before-save)))
-
-;;; Key bindings
-(define-key global-map [C-tab] 'completion-at-point)
-(eval-after-load "slime"
-  '(progn (define-key slime-mode-map [C-tab] 'slime-complete-symbol)
-          (define-key slime-editing-map [C-tab] 'slime-complete-symbol)))
-
-(define-key global-map (kbd "C-w") 'backward-kill-word)
-(define-key global-map (kbd "C-x C-k") 'kill-region)
 
 ;;; Window size
 ;; (dolist (i '((width . 180)
@@ -224,8 +239,7 @@
          (:connection-type . ssl))))
 
 ;;; Julia
-(add-to-list 'load-path "/home/robert/build/ess/lisp")
-(setq inferior-julia-program-name "julia")
+(add-hook 'julia-mode-hook 'julia-repl-mode)
 
 ;;; Supercollider
 (autoload 'sclang-start "sclang" nil t)
@@ -263,6 +277,7 @@
 
 ;;; Clojure
 (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
+(add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
 
 ;;; Sisal
 (add-to-list 'load-path "~/build/sisal/sisal-14.1.0/sisalmode")
@@ -279,7 +294,11 @@
 ;;; Org mode
 (eval-after-load "org-mode"
   '(progn (require 'ox)
-          (require 'ox-beamer)))
+          (require 'ox-beamer)
+          (require 'org-id)))
+
+(setq org-roam-directory (file-truename "~/org-roam-test"))
+(org-roam-db-autosync-mode)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -292,17 +311,15 @@
    ["#2d3743" "#ff4242" "#74af68" "#dbdb95" "#34cae2" "#008b8b" "#00ede1" "#e1e1e0"])
  '(canlock-password "a3979c726470bbc6fec6c7f21c32906a234548b7")
  '(custom-safe-themes
-   (quote
-    ("8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" default)))
+   '("8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" default))
  '(erc-modules
-   (quote
-    (autojoin button completion fill irccontrols list match menu move-to-prompt netsplit networks noncommands readonly ring stamp track)))
+   '(autojoin button completion fill irccontrols list match menu move-to-prompt netsplit networks noncommands readonly ring stamp track))
  '(geiser-repl-read-only-prompt-p nil)
  '(hindent-style "chris-done")
  '(idris-interpreter-path "~/.local/bin/idris")
  '(package-selected-packages
-   (quote
-    (erlang yaml-mode solarized-theme sml-mode slime scad-mode paredit nix-mode lua-mode haskell-mode)))
+   '(magit counsel ivy slime org-roam julia-mode julia-repl rainbow-delimiters cider clojure-mode erlang yaml-mode solarized-theme sml-mode scad-mode paredit nix-mode lua-mode haskell-mode))
+ '(show-trailing-whitespace t)
  '(smtpmail-smtp-server "smtp.gmail.com")
  '(smtpmail-smtp-service 25))
 (custom-set-faces
