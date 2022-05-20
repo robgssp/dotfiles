@@ -37,7 +37,7 @@
 ;; (enable-theme 'solarized)
 
 ;;; Fixed tabs
-(setq-default indent-tabs-mode t)
+(setq-default indent-tabs-mode nil)
 (setq-default tab-width 8)
 (setq c-default-style "linux"
       c-basic-offset 8)
@@ -103,6 +103,9 @@
 
 ;;; Completion
 (ivy-mode)
+
+;;; Helper modes
+(global-auto-revert-mode)
 
 ;;; Mail
 (autoload 'mu4e "mu4e" nil t)
