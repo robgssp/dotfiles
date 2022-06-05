@@ -7,9 +7,9 @@ import Control.Exception
 files = [("zshrc", ".zshrc")
         ,("zprofile", ".zprofile")
         ,("zaliases", ".zaliases")
-        ,("emacs", ".emacs")
+        ,("init.el", ".emacs")
         ,("sshconfig", ".ssh/config")]
-        
+
 main =
   do cwd <- getCurrentDirectory
      home <- getEnv "HOME"

@@ -9,12 +9,6 @@
        (progn ,@body)
      ('error (message "%s failed." '(progn ,@body)))))
 
-(defmacro prr (form)
-  `(progn (message "%s" ',form) ,form))
-
-(defmacro prall (&rest body)
-  `(progn ,@(mapcar (lambda (f) `(prr ,f)) body)))
-
 ;;; Packages
 (try (require 'package)
      (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
@@ -22,8 +16,6 @@
      (package-initialize))
 
 ;;; Fonts
-(setq inhibit-startup-screen t)
-
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
@@ -101,16 +93,11 @@
 (global-set-key (kbd "C-c a") #'org-agenda)
 (global-set-key (kbd "C-c c") #'org-capture)
 
-;;; Completion
-(ivy-mode)
-
 ;;; Helper modes
 (global-auto-revert-mode)
 
 ;;; Mail
 (autoload 'mu4e "mu4e" nil t)
-
-(add-to-list 'load-path "~/emacs")
 
 ;;; General lispy stuffs
 
@@ -298,10 +285,9 @@
 (eval-after-load "org-mode"
   '(progn (require 'ox)
           (require 'ox-beamer)
-          (require 'org-id)))
-
-(setq org-roam-directory (file-truename "~/org-roam-test"))
-(org-roam-db-autosync-mode)
+          (require 'org-id)
+          (org-roam-db-autosync-mode)
+          (setq org-roam-directory (file-truename "~/org-roam-test"))))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -320,8 +306,9 @@
  '(geiser-repl-read-only-prompt-p nil)
  '(hindent-style "chris-done")
  '(idris-interpreter-path "~/.local/bin/idris")
+ '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(magit counsel ivy slime org-roam julia-mode julia-repl rainbow-delimiters cider clojure-mode erlang yaml-mode solarized-theme sml-mode scad-mode paredit nix-mode lua-mode haskell-mode))
+   '(rust-mode magit counsel ivy slime org-roam julia-mode julia-repl rainbow-delimiters cider clojure-mode erlang yaml-mode solarized-theme sml-mode scad-mode paredit nix-mode lua-mode haskell-mode))
  '(show-trailing-whitespace t)
  '(smtpmail-smtp-server "smtp.gmail.com")
  '(smtpmail-smtp-service 25))
