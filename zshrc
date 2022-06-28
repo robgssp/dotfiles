@@ -21,7 +21,8 @@ HISTFILE=~/.histfile
 HISTSIZE=10000
 SAVEHIST=10000
 setopt inc_append_history
-PROMPT='%(?..%?|)[%n@%m]%~%# '
+
+PS1='%(?..%?|)[%n@%m]%~%# '
 REPORTTIME=5
 unsetopt beep
 bindkey -e
@@ -29,6 +30,9 @@ bindkey -e
 
 # file with various aliases
 source $HOME/.zaliases
+
+[[ -e ~/.nix-profile/etc/profile.d/hm-session-vars.sh ]] && \
+    . ~/.nix-profile/etc/profile.d/hm-session-vars.sh
 
 typeset -A key
 
@@ -64,6 +68,11 @@ setopt autocd
 
 #extended globbing
 setopt extendedglob
+
+# direnv
+if command -v direnv > /dev/null 2>&1; then
+    eval "$(direnv hook zsh)"
+fi
 
 # TMUX
 #if [[ $TERM != "dumb" ]]; then
