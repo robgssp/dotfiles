@@ -1,33 +1,23 @@
+# -*- conf-space -*-
+
 #ForwardX11Trusted yes
 #Host *
 #     ForwardAgent yes
 #     ForwardX11 yes
 
-Host tylerton
-     Port 3001
+Host *
+  ControlMaster auto
+  ControlPath ~/.ssh/sockets/%r@%h:%p
+  ControlPersist 60s
 
-Host iam.cornhusk.in
-     Port 222
-
-Host pluto.csh.rit.edu
-     User robert
+Host saturn
+     User nixos
 
 Host rancor totoro helios megavm hactar jake brownstoat ldap *.csh.rit.edu
      User robgssp
 
 Host *.cs.rit.edu *.rc.rit.edu
      User rig1635
-
-Host roborio-2342.local
-     User lvuser
-
-Host hyperion
-     User rob
-
-Host exsaturn
-     User robert
-     HostName starfighter.csh.rit.edu
-     Port 4346
 
 Host *
      User robert
