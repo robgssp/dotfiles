@@ -70,10 +70,10 @@
 (setq next-screen-context-lines 7)
 
 ;;; Color scheme
-;; (add-to-list 'custom-theme-load-path "~/build/emacs-color-theme-solarized")
-;; (setq frame-background-mode 'dark)
-;; (load-theme 'solarized t)
-;; (enable-theme 'solarized)
+(when (equal (system-name) "saturn")
+ (use-package melancholy-theme
+  :config
+  (load-theme 'melancholy t)))
 
 ;;; Fixed tabs globally
 (setq-default indent-tabs-mode nil)
@@ -296,13 +296,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ansi-color-faces-vector
-   [default default default italic underline success warning error])
- '(ansi-color-names-vector
-   ["#2d3743" "#ff4242" "#74af68" "#dbdb95" "#34cae2" "#008b8b" "#00ede1" "#e1e1e0"])
  '(canlock-password "a3979c726470bbc6fec6c7f21c32906a234548b7")
  '(custom-safe-themes
-   '("8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" default))
+   '("6198e96f1fd7de3889a1b6ab8be1fc9b7c734cc9db0b0f16b635a2974601f977" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" default))
  '(erc-modules
    '(autojoin button completion fill irccontrols list match menu move-to-prompt netsplit networks noncommands readonly ring stamp track))
  '(geiser-repl-read-only-prompt-p nil)
