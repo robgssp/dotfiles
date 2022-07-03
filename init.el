@@ -11,6 +11,7 @@
 
 ;;; Packages
 (setq straight-use-package-by-default t)
+(setq straight-check-for-modifications '(check-on-save find-when-checking))
 
 (defvar bootstrap-version)
 (let ((bootstrap-file
