@@ -226,7 +226,8 @@
 ;; (add-to-list 'auto-mode-alist '("\\.\\(sc\\|scd\\)$" . sclang-mode))
 
 ;;; Erlang
-(use-package erlang :defer t)
+;; Disabled unless/until I actually want it: it downloads all of OTP, ~800M.
+;; (use-package erlang :defer t)
 
 ;;; J
 (use-package j-mode :defer t)
