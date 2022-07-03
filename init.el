@@ -101,6 +101,9 @@
 
 (use-package magit :defer t)
 
+(use-package company)
+(add-hook 'after-init-hook 'global-company-mode)
+
 ;;; C Formatting
 (setq c-basic-offset 8)
 
