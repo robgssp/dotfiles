@@ -271,6 +271,10 @@
   :init
   (setq-default sml-indent-level 3))
 
+;;: Javascript
+(setq-default js-indent-level 2)
+(add-to-list 'auto-mode-alist '("\\.ts\\'" . js-mode))
+
 ;;; Org mode
 ;; (use-package org-roam)
 (eval-after-load "org-mode"
