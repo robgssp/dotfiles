@@ -1,7 +1,10 @@
+# -*- sh -*-
+
 export LOCALPREFIX=${HOME}/Programs
 export PATH="$HOME/.cabal/bin:$PATH:$LOCALPREFIX/bin:$HOME/Programs/android-sdk-linux/tools:$HOME/Programs/android-sdk-linux/platform-tools:$HOME/perl5/bin:$HOME/build/smlnj/bin:$HOME/go/bin:$HOME/.local/bin"
 export PATH_="$PATH"
 
+export LOCATE_PATH=$HOME/.locatedb
 export GOPATH="$HOME/go"
 
 export EDITOR=emacs
@@ -11,7 +14,7 @@ export WINEARCH=win32
 
 export QT_GRAPHICSSYSTEM=raster
 
-export BROWSER=/usr/bin/firefox
+export BROWSER=firefox
 
 export LIBRARY_PATH=$LOCALPREFIX/lib
 export CPATH=$LOCALPREFIX/include
@@ -30,6 +33,8 @@ export O3D_OVERRIDE_RENDER_MODE=2D
 export _JAVA_AWT_WM_NONREPARENTING=1
 
 export PATSHOME=$LOCALPREFIX/lib/ats2-postiats-0.1.11
+
+export MOZ_USE_XINPUT2=1
 
 # Emacs Daemon
 [[ -e "/tmp/emacs$UID/server" ]] || emacs --daemon
