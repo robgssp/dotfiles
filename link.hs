@@ -11,6 +11,7 @@ files = [("zshrc", ".zshrc")
         ,("zprofile", ".zprofile")
         ,("zaliases", ".zaliases")
         ,("init.el", ".emacs")
+        ,("early-init.el", ".emacs.d/early-init.el")
         ,("sshconfig", ".ssh/config")]
 
 main =
