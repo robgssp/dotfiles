@@ -91,10 +91,6 @@
 (global-set-key (kbd "C-w") 'backward-kill-word)
 (global-set-key (kbd "C-x C-k") 'kill-region)
 (global-set-key (kbd "C-x w") 'other-window-back)
-(global-set-key (kbd "C-c l") #'org-store-link)
-(global-set-key (kbd "C-c a") #'org-agenda)
-(global-set-key (kbd "C-c c") #'org-capture)
-
 
 ;;; Helper modes
 (global-auto-revert-mode)
@@ -277,15 +273,51 @@
 (add-to-list 'auto-mode-alist '("\\.ts\\'" . js-mode))
 
 ;;; Org mode
-;; (use-package org-roam)
-(eval-after-load "org-mode"
-  '(progn
-     (dolist (backend '(beamer md man))
-       (push backend org-export-backends))
+(use-package org
+  :defer t
+  :hook (org-mode
+         . (lambda ()
+             (auto-fill-mode -1)
+             (visual-line-mode 1)
+             (org-indent-mode 1)
+             (setq buffer-file-coding-system 'utf-8-unix)))
+  :config
+  (dolist (backend '(beamer md man))
+    (push backend org-export-backends))
+  (require 'org-id))
 
-     (require 'org-id)
-     (org-roam-db-autosync-mode)
-     (setq org-roam-directory (file-truename "~/org-roam-test"))))
+(use-package org-superstar
+  :hook  (org-mode . org-superstar-mode))
+
+(use-package org-roam
+  :defer t
+  :bind (:map global-map
+         ("C-c l" . org-store-link)
+         ("C-c a" . org-agenda)
+         ("C-c c" . org-capture)
+         ("C-c n n" . org-roam-node-find)
+         ("C-c n l" . org-roam-node-insert)
+         ("C-c n i" . org-id-get-create)
+         ("C-c d d" . org-roam-dailies-goto-today)
+         ("C-c d t" . org-roam-dailies-goto-tomorrow)
+         ("C-c d c" . org-roam-dailies-goto-date)
+         :map minibuffer-local-completion-map
+         ("SPC" . self-insert-command))
+  :custom
+  (org-roam-directory (if (equal system-type 'windows-nt)
+                          "c:/users/robgs/Documents/Logseq"
+                        "/home/robert/Documents/Logseq"))
+  (org-roam-dailies-directory "journals/")
+  (org-roam-capture-templates
+   '(("d" "default" plain
+      "%?" :target
+      (file+head "pages/${slug}.org" "#+title: ${title}\n")
+      :unnarrowed t)))
+  ;; (org-capture-templates
+  ;;  '(("n" "note" entry (file "pages/${slug}.org")
+  ;;     :unnarrowed t)))
+  :config
+  (org-roam-db-autosync-mode))
 
 ;;; Nix
 (use-package nix-mode :defer t)
