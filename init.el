@@ -101,6 +101,11 @@
 (use-package company)
 (add-hook 'after-init-hook 'global-company-mode)
 
+;;; Spell-check
+(when (eq system-type 'windows-nt)
+  (setq ispell-program-name "C:/msys64/mingw64/bin/hunspell.exe")
+  (setenv "LANG" "en_US"))
+
 ;;; C Formatting
 (setq c-basic-offset 8)
 
