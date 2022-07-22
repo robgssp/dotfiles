@@ -70,7 +70,7 @@
 (setq next-screen-context-lines 7)
 
 ;;; Color scheme
-(when (equal (system-name) "saturn")
+(when (cl-equalp (system-name) "saturn")
  (use-package melancholy-theme
   :config
   (load-theme 'melancholy t)))
