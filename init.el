@@ -97,7 +97,6 @@
 (global-auto-revert-mode)
 (global-linum-mode 1)
 
-
 (use-package company
   :hook (after-init . global-company-mode))
 
@@ -105,6 +104,11 @@
 (when (eq system-type 'windows-nt)
   (setq ispell-program-name "C:/msys64/mingw64/bin/hunspell.exe")
   (setenv "LANG" "en_US"))
+
+(use-package ripgrep
+  :defer t
+  :bind (:map global-map
+         ("C-c g" . ripgrep-regexp)))
 
 (use-package magit :defer t)
 
