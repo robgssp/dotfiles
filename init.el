@@ -69,6 +69,7 @@
 (setq read-file-name-completion-ignore-case t)
 (setq completion-ignore-case t)
 (setq next-screen-context-lines 7)
+(setq auto-save-timeout 5)
 
 ;;; Color scheme
 (when (cl-equalp (system-name) "saturn")
