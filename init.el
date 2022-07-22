@@ -96,15 +96,16 @@
 (global-auto-revert-mode)
 (global-linum-mode 1)
 
-(use-package magit :defer t)
 
-(use-package company)
-(add-hook 'after-init-hook 'global-company-mode)
+(use-package company
+  :hook (after-init . global-company-mode))
 
 ;;; Spell-check
 (when (eq system-type 'windows-nt)
   (setq ispell-program-name "C:/msys64/mingw64/bin/hunspell.exe")
   (setenv "LANG" "en_US"))
+
+(use-package magit :defer t)
 
 ;;; C Formatting
 (setq c-basic-offset 8)
