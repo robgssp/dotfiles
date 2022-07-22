@@ -95,6 +95,7 @@
 
 ;;; Helper modes
 (global-auto-revert-mode)
+(add-hook 'dired-mode-hook 'auto-revert-mode)
 (global-linum-mode 1)
 
 (use-package company
