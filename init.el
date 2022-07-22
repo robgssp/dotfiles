@@ -67,6 +67,7 @@
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 
 (setq read-file-name-completion-ignore-case t)
+(setq completion-ignore-case t)
 (setq next-screen-context-lines 7)
 
 ;;; Color scheme
