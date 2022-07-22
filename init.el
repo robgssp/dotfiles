@@ -69,9 +69,10 @@
 (setq read-file-name-completion-ignore-case t)
 (setq completion-ignore-case t)
 (setq next-screen-context-lines 7)
+(setq auto-save-timeout 5)
 
 ;;; Color scheme
-(when (equal (system-name) "saturn")
+(when (cl-equalp (system-name) "saturn")
  (use-package melancholy-theme
   :config
   (load-theme 'melancholy t)))
@@ -286,6 +287,7 @@
              (auto-fill-mode -1)
              (visual-line-mode 1)
              (org-indent-mode 1)
+             (set (make-local-variable 'auto-save-visited-mode) t)
              (setq buffer-file-coding-system 'utf-8-unix)))
   :config
   (dolist (backend '(beamer md man))
@@ -303,10 +305,14 @@
          ("C-c c" . org-capture)
          ("C-c n n" . org-roam-node-find)
          ("C-c n l" . org-roam-node-insert)
-         ("C-c n i" . org-id-get-create)
+         ("C-c n i" . org-id-store-link)
+         ("C-c n b" . org-roam-buffer-toggle)
+         ("C-c d y" . org-roam-dailies-goto-yesterday)
          ("C-c d d" . org-roam-dailies-goto-today)
          ("C-c d t" . org-roam-dailies-goto-tomorrow)
          ("C-c d c" . org-roam-dailies-goto-date)
+         ("C-c d n" . org-roam-dailies-goto-next-note)
+         ("C-c d p" . org-roam-dailies-goto-previous-note)
          :map minibuffer-local-completion-map
          ("SPC" . self-insert-command))
   :custom
@@ -323,7 +329,18 @@
   ;;  '(("n" "note" entry (file "pages/${slug}.org")
   ;;     :unnarrowed t)))
   :config
-  (org-roam-db-autosync-mode))
+  (org-roam-db-autosync-mode)
+  (setq org-id-link-to-org-use-id t))
+
+(add-to-list 'display-buffer-alist
+               '("\\*org-roam\\*"
+                  (display-buffer-in-direction)
+                  (direction . right)
+                  (window-width . 0.33)
+                  (window-height . fit-window-to-buffer)))
+
+(auto-save-visited-mode 1)
+(setq-default auto-save-visited-mode nil)
 
 ;;; Nix
 (use-package nix-mode :defer t)
@@ -348,6 +365,32 @@
  '(hindent-style "chris-done")
  '(idris-interpreter-path "~/.local/bin/idris")
  '(inhibit-startup-screen t)
+ '(safe-local-variable-values
+   '((elisp-lint-indent-specs
+      (describe . 1)
+      (it . 1)
+      (thread-first . 0)
+      (cl-flet . 1)
+      (cl-flet* . 1)
+      (org-element-map . defun)
+      (org-roam-dolist-with-progress . 2)
+      (org-roam-with-temp-buffer . 1)
+      (org-with-point-at . 1)
+      (magit-insert-section . defun)
+      (magit-section-case . 0)
+      (org-roam-with-file . 2))
+     (elisp-lint-ignored-validators "byte-compile" "package-lint")
+     (eval c-set-offset 'inlambda 0)
+     (eval c-set-offset 'access-label '-)
+     (eval c-set-offset 'substatement-open 0)
+     (eval c-set-offset 'arglist-cont-nonempty '+)
+     (eval c-set-offset 'arglist-cont 0)
+     (eval c-set-offset 'arglist-intro '+)
+     (eval c-set-offset 'inline-open 0)
+     (eval c-set-offset 'defun-open 0)
+     (eval c-set-offset 'innamespace 0)
+     (indicate-empty-lines . t)
+     (c-block-comment-prefix . "  ")))
  '(show-trailing-whitespace t)
  '(smtpmail-smtp-server "smtp.gmail.com")
  '(smtpmail-smtp-service 25)
