@@ -285,6 +285,7 @@
              (auto-fill-mode -1)
              (visual-line-mode 1)
              (org-indent-mode 1)
+             (set (make-local-variable 'auto-save-visited-mode) t)
              (setq buffer-file-coding-system 'utf-8-unix)))
   :config
   (dolist (backend '(beamer md man))
@@ -302,10 +303,14 @@
          ("C-c c" . org-capture)
          ("C-c n n" . org-roam-node-find)
          ("C-c n l" . org-roam-node-insert)
-         ("C-c n i" . org-id-get-create)
+         ("C-c n i" . org-id-store-link)
+         ("C-c n b" . org-roam-buffer-toggle)
+         ("C-c d y" . org-roam-dailies-goto-yesterday)
          ("C-c d d" . org-roam-dailies-goto-today)
          ("C-c d t" . org-roam-dailies-goto-tomorrow)
          ("C-c d c" . org-roam-dailies-goto-date)
+         ("C-c d n" . org-roam-dailies-goto-next-note)
+         ("C-c d p" . org-roam-dailies-goto-previous-note)
          :map minibuffer-local-completion-map
          ("SPC" . self-insert-command))
   :custom
@@ -322,7 +327,18 @@
   ;;  '(("n" "note" entry (file "pages/${slug}.org")
   ;;     :unnarrowed t)))
   :config
-  (org-roam-db-autosync-mode))
+  (org-roam-db-autosync-mode)
+  (setq org-id-link-to-org-use-id t))
+
+(add-to-list 'display-buffer-alist
+               '("\\*org-roam\\*"
+                  (display-buffer-in-direction)
+                  (direction . right)
+                  (window-width . 0.33)
+                  (window-height . fit-window-to-buffer)))
+
+(auto-save-visited-mode 1)
+(setq-default auto-save-visited-mode nil)
 
 ;;; Nix
 (use-package nix-mode :defer t)
