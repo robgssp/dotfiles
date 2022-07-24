@@ -71,11 +71,16 @@
 (setq next-screen-context-lines 7)
 (setq auto-save-timeout 5)
 
-;;; Color scheme
+;;; Colors and styling
 (when (cl-equalp (system-name) "saturn")
- (use-package melancholy-theme
-  :config
-  (load-theme 'melancholy t)))
+  (when (eq system-type 'gnu/linux)
+    (use-package melancholy-theme
+      :config
+      (load-theme 'melancholy t)))
+
+  (when (eq system-type 'windows-nt)
+    (load-theme 'tango-dark t)
+    (set-frame-font "Terminus-12" nil t)))
 
 ;;; Fixed tabs globally
 (setq-default indent-tabs-mode nil)
