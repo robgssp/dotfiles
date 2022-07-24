@@ -308,6 +308,9 @@
     (push backend org-export-backends))
   (require 'org-id))
 
+(auto-save-visited-mode 1)
+(setq-default auto-save-visited-mode nil)
+
 (use-package org-superstar
   :hook  (org-mode . org-superstar-mode))
 
@@ -344,17 +347,13 @@
   ;;     :unnarrowed t)))
   :config
   (org-roam-db-autosync-mode)
-  (setq org-id-link-to-org-use-id t))
-
-(add-to-list 'display-buffer-alist
+  (setq org-id-link-to-org-use-id t)
+  (add-to-list 'display-buffer-alist
                '("\\*org-roam\\*"
                   (display-buffer-in-direction)
                   (direction . right)
                   (window-width . 0.33)
-                  (window-height . fit-window-to-buffer)))
-
-(auto-save-visited-mode 1)
-(setq-default auto-save-visited-mode nil)
+                  (window-height . fit-window-to-buffer))))
 
 ;;; Nix
 (use-package nix-mode :defer t)
