@@ -363,6 +363,9 @@
 ;;; Rust
 (use-package rust-mode :defer t)
 
+;;; Powershell
+(use-package powershell :defer t)
+
 (use-package lsp-mode
   :hook (rust-mode . lsp))
 
