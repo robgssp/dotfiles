@@ -355,7 +355,16 @@
                   (display-buffer-in-direction)
                   (direction . right)
                   (window-width . 0.33)
-                  (window-height . fit-window-to-buffer))))
+                  (window-height . fit-window-to-buffer)))
+
+  ;; Hack: logseq sticks backup files in the roam directory. Filter
+  ;; them out of org's file list.
+  (defun rob/filter-org-files (fn &rest args)
+    (cl-remove-if (lambda (file)
+                    (string-match "logseq/bak" file))
+                  (apply fn args)))
+
+  (advice-add 'org-roam--list-files :around #'rob/filter-org-files))
 
 ;;; Nix
 (use-package nix-mode :defer t)
