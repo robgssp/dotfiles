@@ -71,6 +71,8 @@
 (setq next-screen-context-lines 7)
 (setq auto-save-timeout 5)
 
+(prefer-coding-system 'utf-8)
+
 ;;; Colors and styling
 (when (cl-equalp (system-name) "saturn")
   (when (eq system-type 'gnu/linux)
