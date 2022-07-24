@@ -322,8 +322,8 @@
          ("SPC" . self-insert-command))
   :custom
   (org-roam-directory (if (equal system-type 'windows-nt)
-                          "c:/users/robgs/Documents/Logseq"
-                        "/home/robert/Documents/Logseq"))
+                          "c:/users/robgs/Documents/org"
+                        "/home/robert/Documents/org"))
   (org-roam-dailies-directory "journals/")
   (org-roam-capture-templates
    '(("d" "default" plain
