@@ -145,6 +145,10 @@
   :bind (:map paredit-mode-map
               ("C-w" . paredit-backward-kill-word)))
 
+(define-key emacs-lisp-mode-map (kbd "C-c C-b") 'eval-buffer)
+(define-key emacs-lisp-mode-map (kbd "C-c C-l") 'load-file)
+(define-key global-map (kbd "C-c e d") 'toggle-debug-on-error)
+
 ;;; SLIME setup
 (use-package slime
   :bind (:map slime-mode-map
