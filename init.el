@@ -349,6 +349,7 @@
   ;;     :unnarrowed t)))
   :config
   (org-roam-db-autosync-mode)
+  (defalias 'org-font-lock-ensure 'font-lock-ensure)
   (setq org-id-link-to-org-use-id t)
   (add-to-list 'display-buffer-alist
                '("\\*org-roam\\*"
