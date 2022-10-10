@@ -348,6 +348,7 @@
   ;; (org-capture-templates
   ;;  '(("n" "note" entry (file "pages/${slug}.org")
   ;;     :unnarrowed t)))
+  (org-startup-folded 'nofold)
   :config
   (org-roam-db-autosync-mode)
   (defalias 'org-font-lock-ensure 'font-lock-ensure)
