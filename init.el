@@ -334,7 +334,11 @@
          ("C-c d n" . org-roam-dailies-goto-next-note)
          ("C-c d p" . org-roam-dailies-goto-previous-note)
          :map minibuffer-local-completion-map
-         ("SPC" . self-insert-command))
+         ("SPC" . self-insert-command)
+         :map org-mode-map
+         ("C-c n f a" . org-anki-sync-entry)
+         ("C-c n f d" . org-anki-delete-entry)
+         ("C-c n f u" . org-anki-update-all))
   :custom
   (org-roam-directory (if (equal system-type 'windows-nt)
                           "c:/Users/robgs/Documents/org"
@@ -368,6 +372,9 @@
                   (apply fn args)))
 
   (advice-add 'org-roam--list-files :around #'rob/filter-org-files))
+
+(use-package org-anki
+  :defer t)
 
 ;;; Nix
 (use-package nix-mode :defer t)
