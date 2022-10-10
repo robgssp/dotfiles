@@ -115,6 +115,7 @@
 
 (use-package ripgrep
   :defer t
+  :hook (ripgrep-search-mode . visual-line-mode)
   :bind (:map global-map
          ("C-c g" . ripgrep-regexp)))
 
