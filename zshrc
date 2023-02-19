@@ -16,17 +16,23 @@ zstyle :compinstall filename '/home/robert/.zshrc'
 autoload -Uz compinit
 compinit
 # End of lines added by compinstall
-# Lines configured by zsh-newuser-install
+
 HISTFILE=~/.histfile
 HISTSIZE=10000
 SAVEHIST=10000
 setopt inc_append_history
 
-PS1='%(?..%?|)[%n@%m]%~%# '
+if (( $UID == 0 )); then
+    color=$'\e[1;31m'
+else
+    color=$'\e[1;32m'
+fi
+
+PROMPT=$'\n%(?..%?|)'$color$'[%n@%m]%~%#\e[0m '
+
 REPORTTIME=5
 unsetopt beep
 bindkey -e
-# End of lines configured by zsh-newuser-install
 
 # file with various aliases
 source $HOME/.zaliases
@@ -81,14 +87,7 @@ fi
 #fi
 
 # Terminal title
-
-case $TERM in
-    xterm*|*rxvt*)
-        precmd () { print -Pn "\e]0;%n@%m: %~\a" }
-        preexec () {
-            print -Pn "\e]0;%n@%m: $1\a"
-        }
-        ;;
-esac
+precmd () { print -Pn "\e]0;%n@%m: %~\a" }
+preexec () { print -Pn "\e]0;%n@%m: $1\a" }
 
 fortune
