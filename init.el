@@ -453,6 +453,17 @@
 (use-package lsp-mode
   :hook (rust-mode . lsp))
 
+;;; Gnus
+(use-package gnus :defer t)
+(use-package hydra)
+
+(setq send-mail-function 'smtpmail-send-it
+      smtpmail-smtp-server "smtp.gmail.com"
+      smtpmail-smtp-service 587
+      smtpmail-stream-type 'starttls
+      user-full-name "Rob Glossop"
+      user-mail-address "robgssp@gmail.com")
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -494,8 +505,6 @@
      (indicate-empty-lines . t)
      (c-block-comment-prefix . "  ")))
  '(show-trailing-whitespace t)
- '(smtpmail-smtp-server "smtp.gmail.com")
- '(smtpmail-smtp-service 25)
  '(vc-follow-symlinks t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
