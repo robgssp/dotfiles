@@ -353,6 +353,22 @@
   ;;  '(("n" "note" entry (file "pages/${slug}.org")
   ;;     :unnarrowed t)))
   (org-startup-folded 'nofold)
+
+  :init
+
+  ;; Hack: logseq sticks backup files in the roam directory. Filter
+  ;; them out of org's file list.
+  ;; (defun rob/filter-org-files (fn &rest args)
+  ;;   (cl-remove-if (lambda (file)
+  ;;                   (string-match "logseq/bak" file))
+  ;;                 (apply fn args)))
+
+  ;; (advice-add 'org-roam--list-files :around #'rob/filter-org-files)
+
+  (setq org-roam-db-node-include-function
+        (lambda ()
+          (not (string-match "logseq/bak" (buffer-file-name)))))
+
   :config
   (org-roam-db-autosync-mode)
   (defalias 'org-font-lock-ensure 'font-lock-ensure)
@@ -362,16 +378,65 @@
                   (display-buffer-in-direction)
                   (direction . right)
                   (window-width . 0.33)
-                  (window-height . fit-window-to-buffer)))
+                  (window-height . fit-window-to-buffer))))
 
-  ;; Hack: logseq sticks backup files in the roam directory. Filter
-  ;; them out of org's file list.
-  (defun rob/filter-org-files (fn &rest args)
-    (cl-remove-if (lambda (file)
-                    (string-match "logseq/bak" file))
-                  (apply fn args)))
+;; todo tracking machinery. Copied from https://d12frosted.io/posts/2021-01-16-task-management-with-roam-vol5.html
 
-  (advice-add 'org-roam--list-files :around #'rob/filter-org-files))
+(use-package vulpea)
+
+(add-to-list 'org-tags-exclude-from-inheritance "project")
+
+(defun rob/project-p ()
+  (org-element-map
+      (org-element-parse-buffer 'headline)
+      'headline
+    (lambda (h) (eq (org-element-property :todo-type h)
+                    'todo))
+    nil 'first-match))
+
+(add-hook 'find-file-hook #'rob/project-update-tag)
+(add-hook 'before-save-hook #'rob/project-update-tag)
+
+(defun rob/project-update-tag ()
+  (when (and (not (active-minibuffer-window))
+             (rob/org-note-p))
+    (save-excursion
+      (goto-char (point-min))
+      (let* ((tags (vulpea-buffer-tags-get))
+             (original-tags tags))
+        (if (rob/project-p)
+            (setq tags (cons "project" tags))
+          (setq tags (remove "project" tags)))
+
+        (setq tags (seq-uniq tags))
+
+        (when (or (seq-difference tags original-tags)
+                  (seq-difference original-tags tags))
+          (apply #'vulpea-buffer-tags-set tags))))))
+
+(defun rob/org-note-p ()
+  (and buffer-file-name
+       (string-prefix-p (expand-file-name (file-name-as-directory org-roam-directory))
+                        (file-name-directory buffer-file-name))
+       (string-suffix-p ".org" buffer-file-name)))
+
+(defun rob/project-files ()
+  "Return a list of note files containing the 'project' tag"
+  (seq-uniq
+   (seq-map
+    #'car
+    (org-roam-db-query
+     [:select [nodes:file]
+              :from tags
+              :left-join nodes
+              :on (= tags:node-id nodes:id)
+              :where (like tag (quote "%\"project\"%"))]))))
+
+(defun rob/agenda-files-update (&rest _)
+  (setq org-agenda-files (sort (rob/project-files) 'string<)))
+
+(advice-add 'org-agenda :before #'rob/agenda-files-update)
+(advice-add 'org-agenda :before #'rob/agenda-files-update)
 
 (use-package org-anki
   :defer t)
