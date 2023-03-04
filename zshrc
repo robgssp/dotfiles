@@ -23,12 +23,19 @@ SAVEHIST=10000
 setopt inc_append_history
 
 if (( $UID == 0 )); then
-    color=$'\e[1;31m'
+    color=$'%F{red}'
 else
-    color=$'\e[1;32m'
+    color=$'%F{green}'
 fi
 
-PROMPT=$'\n%(?..%?|)'$color$'[%n@%m]%~%#\e[0m '
+ssh_host=$(who am i | perl -n -e 'print "$1\n" if /\((.*)\)$/')
+if [[ -n "$ssh_host" ]]; then
+    host_color=$'%F{yellow}'
+else
+    host_color=$color
+fi
+
+PROMPT=$'\n%(?..%?|)%B'$color$'[%n@'$host_color$'%m'$color$']%~%#%b%f '
 
 REPORTTIME=5
 unsetopt beep
