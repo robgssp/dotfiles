@@ -106,7 +106,8 @@
 (global-linum-mode 1)
 
 (use-package company
-  :hook (after-init . global-company-mode))
+  :hook ((after-init . global-company-mode)
+         (org-mode . (lambda () (company-mode -1)))))
 
 ;;; Spell-check
 (when (eq system-type 'windows-nt)
