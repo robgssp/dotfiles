@@ -70,6 +70,7 @@
 (setq completion-ignore-case t)
 (setq next-screen-context-lines 7)
 (setq auto-save-timeout 5)
+(setq native-comp-async-report-warnings-errors nil)
 
 (prefer-coding-system 'utf-8)
 
