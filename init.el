@@ -388,7 +388,8 @@
 ;; todo tracking machinery. Copied from https://d12frosted.io/posts/2021-01-16-task-management-with-roam-vol5.html
 
 (use-package vulpea
-  :functions (vulpea-buffer-tags-get vulpea-buffer-tags-set))
+  :defer t
+  :commands (vulpea-buffer-tags-get vulpea-buffer-tags-set))
 
 (defun rob/project-p ()
   (org-element-map
