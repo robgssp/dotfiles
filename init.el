@@ -311,6 +311,9 @@
   :config
   (dolist (backend '(beamer md man))
     (push backend org-export-backends))
+
+  (add-to-list 'org-tags-exclude-from-inheritance "project")
+
   (require 'org-id))
 
 (auto-save-visited-mode 1)
@@ -384,9 +387,8 @@
 
 ;; todo tracking machinery. Copied from https://d12frosted.io/posts/2021-01-16-task-management-with-roam-vol5.html
 
-(use-package vulpea)
-
-(add-to-list 'org-tags-exclude-from-inheritance "project")
+(use-package vulpea
+  :functions (vulpea-buffer-tags-get vulpea-buffer-tags-set))
 
 (defun rob/project-p ()
   (org-element-map
@@ -418,6 +420,7 @@
 
 (defun rob/org-note-p ()
   (and buffer-file-name
+       (boundp 'org-roam-directory)
        (string-prefix-p (expand-file-name (file-name-as-directory org-roam-directory))
                         (file-name-directory buffer-file-name))
        (string-suffix-p ".org" buffer-file-name)))
