@@ -104,7 +104,9 @@
 ;;; Helper modes
 (global-auto-revert-mode)
 (add-hook 'dired-mode-hook 'auto-revert-mode)
-(global-linum-mode 1)
+(if (version<= emacs-version "26.1.0")
+    (global-linum-mode 1)
+  (global-display-line-numbers-mode))
 
 (use-package company
   :hook ((after-init . global-company-mode)
