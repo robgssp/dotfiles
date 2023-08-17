@@ -72,6 +72,7 @@
 (setq auto-save-timeout 5)
 (setq native-comp-async-report-warnings-errors nil)
 
+(setq visible-bell 1)
 (prefer-coding-system 'utf-8)
 
 ;;; Colors and styling
@@ -100,6 +101,7 @@
 (global-set-key (kbd "C-w") 'backward-kill-word)
 (global-set-key (kbd "C-x C-k") 'kill-region)
 (global-set-key (kbd "C-x w") 'other-window-back)
+(global-set-key (kbd "<f13>") 'ignore)
 
 ;;; Helper modes
 (global-auto-revert-mode)
