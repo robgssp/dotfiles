@@ -70,6 +70,7 @@
 (setq completion-ignore-case t)
 (setq next-screen-context-lines 7)
 (setq auto-save-timeout 5)
+(setq native-comp-async-report-warnings-errors nil)
 
 (setq visible-bell 1)
 (prefer-coding-system 'utf-8)
@@ -312,6 +313,9 @@
   :config
   (dolist (backend '(beamer md man))
     (push backend org-export-backends))
+
+  (add-to-list 'org-tags-exclude-from-inheritance "project")
+
   (require 'org-id))
 
 (auto-save-visited-mode 1)
@@ -385,9 +389,9 @@
 
 ;; todo tracking machinery. Copied from https://d12frosted.io/posts/2021-01-16-task-management-with-roam-vol5.html
 
-(use-package vulpea)
-
-(add-to-list 'org-tags-exclude-from-inheritance "project")
+(use-package vulpea
+  :defer t
+  :commands (vulpea-buffer-tags-get vulpea-buffer-tags-set))
 
 (defun rob/project-p ()
   (org-element-map
@@ -419,6 +423,7 @@
 
 (defun rob/org-note-p ()
   (and buffer-file-name
+       (boundp 'org-roam-directory)
        (string-prefix-p (expand-file-name (file-name-as-directory org-roam-directory))
                         (file-name-directory buffer-file-name))
        (string-suffix-p ".org" buffer-file-name)))
@@ -466,6 +471,9 @@
       smtpmail-stream-type 'starttls
       user-full-name "Rob Glossop"
       user-mail-address "robgssp@gmail.com")
+
+;;; Terraform
+(use-package terraform-mode :defer t)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
