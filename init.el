@@ -446,7 +446,6 @@
   (setq org-agenda-files (sort (rob/project-files) 'string<)))
 
 (advice-add 'org-agenda :before #'rob/agenda-files-update)
-(advice-add 'org-agenda :before #'rob/agenda-files-update)
 
 (use-package org-anki
   :defer t)
