@@ -75,6 +75,13 @@
 (setq visible-bell 1)
 (prefer-coding-system 'utf-8)
 
+(xterm-mouse-mode 1)
+;; visible-cursor makes the cursor some terminal-defined definition of
+;; "extra visible". Under alacritty it blinks which is a little
+;; annoying.
+(unless (display-graphic-p)
+  (setq visible-cursor nil))
+
 ;;; Colors and styling
 (when (cl-equalp (system-name) "saturn")
   (when (eq system-type 'gnu/linux)
