@@ -110,6 +110,10 @@
     (global-linum-mode 1)
   (global-display-line-numbers-mode))
 
+(use-package transpose-frame
+  :bind (:map global-map
+              ("C-c f" . transpose-frame)))
+
 (use-package company
   :hook ((after-init . global-company-mode)
          (org-mode . (lambda () (company-mode -1)))))
