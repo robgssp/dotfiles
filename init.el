@@ -83,7 +83,8 @@
   (setq visible-cursor nil))
 
 ;;; Colors and styling
-(when (cl-equalp (system-name) "saturn")
+(cond
+ ((cl-equalp (system-name) "saturn")
   (when (eq system-type 'gnu/linux)
     (use-package melancholy-theme
       :config
@@ -92,6 +93,12 @@
   (when (eq system-type 'windows-nt)
     (load-theme 'tango-dark t)
     (set-frame-font "Terminus-12" nil t)))
+
+ (t
+  ;; (equal window-system 'pgtk)
+  (use-package standard-themes)
+  (load-theme 'standard-dark t)
+  (set-frame-font "-1ASC-Liberation Mono-regular-normal-normal-*-10-*-*-*-*-0-iso10646-1" nil t)))
 
 ;;; Fixed tabs globally
 (setq-default indent-tabs-mode nil)
@@ -504,7 +511,7 @@
  ;; If there is more than one, they won't work right.
  '(canlock-password "a3979c726470bbc6fec6c7f21c32906a234548b7")
  '(custom-safe-themes
-   '("6198e96f1fd7de3889a1b6ab8be1fc9b7c734cc9db0b0f16b635a2974601f977" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" default))
+   '("d8bcb88ef0a3259a38d6deba78e569c0750ebfede82ad3e6da16573419fef48c" "6198e96f1fd7de3889a1b6ab8be1fc9b7c734cc9db0b0f16b635a2974601f977" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" default))
  '(erc-modules
    '(autojoin button completion fill irccontrols list match menu move-to-prompt netsplit networks noncommands readonly ring stamp track))
  '(geiser-repl-read-only-prompt-p nil)
