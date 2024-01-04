@@ -143,6 +143,7 @@
   :bind (:map global-map
          ("C-c g" . ripgrep-regexp)))
 
+(use-package git-commit)
 (use-package magit :defer t)
 
 ;;; C Formatting
