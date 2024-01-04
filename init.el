@@ -146,6 +146,10 @@
 (use-package git-commit)
 (use-package magit :defer t)
 
+(use-package direnv
+  :config
+  (direnv-mode))
+
 ;;; C Formatting
 (setq c-basic-offset 8)
 
