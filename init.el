@@ -80,7 +80,9 @@
 ;; "extra visible". Under alacritty it blinks which is a little
 ;; annoying.
 (unless (display-graphic-p)
-  (setq visible-cursor nil))
+  (setq visible-cursor nil)
+  (mouse-wheel-mode 1)
+  (setq mouse-wheel-scroll-amount '(5)))
 
 ;;; Colors and styling
 (cond
