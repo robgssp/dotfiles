@@ -100,7 +100,12 @@
   ;; (equal window-system 'pgtk)
   (use-package standard-themes)
   (load-theme 'standard-dark t)
-  (set-frame-font "-1ASC-Liberation Mono-regular-normal-normal-*-10-*-*-*-*-0-iso10646-1" nil t)))
+  (let ((scale (cdr
+                (assoc 'scale-factor
+                       (car (display-monitor-attributes-list))))))
+    (if (and scale (> scale 1))
+        (set-frame-font "-1ASC-Liberation Mono-regular-normal-normal-*-10-*-*-*-*-0-iso10646-1" nil t)
+        (set-frame-font "-1ASC-Liberation Mono-regular-normal-normal-*-12-*-*-*-*-0-iso10646-1" nil t)))))
 
 ;;; Fixed tabs globally
 (setq-default indent-tabs-mode nil)
