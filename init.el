@@ -86,15 +86,11 @@
 
 ;;; Colors and styling
 (cond
- ((cl-equalp (system-name) "saturn")
-  (when (eq system-type 'gnu/linux)
-    (use-package melancholy-theme
-      :config
-      (load-theme 'melancholy t)))
+ ((and (cl-equalp (system-name) "saturn")
+       (eq system-type 'windows-nt))
 
-  (when (eq system-type 'windows-nt)
-    (load-theme 'tango-dark t)
-    (set-frame-font "Terminus-12" nil t)))
+  (load-theme 'tango-dark t)
+  (set-frame-font "Terminus-12" nil t))
 
  (t
   ;; (equal window-system 'pgtk)
