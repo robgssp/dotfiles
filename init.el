@@ -111,6 +111,11 @@
 ;;(setq-default fill-column 80)
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 
+(defun maximize-window-save ()
+  (interactive ())
+  (window-configuration-to-register ?1)
+  (maximize-window))
+
 ;;; Global keybindings
 (global-set-key (kbd "RET") 'newline-and-indent)
 (global-set-key (kbd "C-x t") 'eshell)
@@ -119,6 +124,17 @@
 (global-set-key (kbd "C-x C-k") 'kill-region)
 (global-set-key (kbd "C-x w") 'other-window-back)
 (global-set-key (kbd "<f13>") 'ignore)
+;; (global-set-key (kbd "C-c w") 'maximize-window-save)
+
+;;; Binds S-<arrow-keys> to move between windows
+(windmove-default-keybindings)
+(global-set-key (kbd "C-c w f") 'windmove-right)
+(global-set-key (kbd "C-c w b") 'windmove-left)
+(global-set-key (kbd "C-c w n") 'windmove-down)
+(global-set-key (kbd "C-c w p") 'windmove-up)
+
+;;; Binds C-c <left> to go back a frame config
+(winner-mode 1)
 
 ;;; Helper modes
 (global-auto-revert-mode)
