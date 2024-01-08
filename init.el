@@ -224,6 +224,8 @@
               ("C-<tab>" . slime-complete-symbol))
   :init
   (setq-default inferior-lisp-program "sbcl")
+  (setq slime-lisp-implementations
+        '((sbcl ("sbcl" "--dynamic-space-size" "16Gb"))))
   (setq-default slime-contribs '(slime-fancy slime-asdf slime-scratch slime-mrepl)))
 
 ;;; Hexl Mode
