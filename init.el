@@ -99,7 +99,7 @@
   (let ((scale (cdr
                 (assoc 'scale-factor
                        (car (display-monitor-attributes-list))))))
-    (if (and scale (> scale 1))
+    (if (and scale (>= scale 2))
         (set-frame-font "-1ASC-Liberation Mono-regular-normal-normal-*-10-*-*-*-*-0-iso10646-1" nil t)
         (set-frame-font "-1ASC-Liberation Mono-regular-normal-normal-*-12-*-*-*-*-0-iso10646-1" nil t)))))
 
@@ -162,13 +162,19 @@
   :bind (:map global-map
          ("C-c g" . ripgrep-regexp)))
 
-(use-package git-commit)
+(use-package git-commit :defer t)
 (use-package magit :defer t)
 
 (when (executable-find "direnv")
   (use-package direnv
     :config
     (direnv-mode)))
+
+;;; CASE_CONVERSION <-> CaseConversion
+(use-package string-inflection
+  :defer t
+  :bind (:map global-map
+              ("C-c i" . string-inflection-cycle)))
 
 ;;; C Formatting
 (setq c-basic-offset 8)
@@ -224,8 +230,10 @@
               ("C-<tab>" . slime-complete-symbol))
   :init
   (setq-default inferior-lisp-program "sbcl")
-  (setq slime-lisp-implementations
-        '((sbcl ("sbcl" "--dynamic-space-size" "16Gb"))))
+  (setq-default slime-lisp-implementations
+                '((sbcl ("sbcl" "--dynamic-space-size" "16Gb"))
+                  (nv-sbcl ("nvidia-run" "sbcl" "--dynamic-space-size" "16Gb"))))
+  (setq-default slime-default-lisp 'sbcl)
   (setq-default slime-contribs '(slime-fancy slime-asdf slime-scratch slime-mrepl)))
 
 ;;; Hexl Mode
@@ -235,6 +243,7 @@
 
 ;;; Scheme setup
 (use-package geiser :defer t)
+(use-package geiser-guile :defer t)
 
 ;;; Haskell setup
 (use-package hindent
@@ -385,6 +394,7 @@
   :defer t
   :bind (:map global-map
          ("C-c l" . org-store-link)
+         ;; TODO list: C-C a t
          ("C-c a" . org-agenda)
          ("C-c c" . org-capture)
          ("C-c n n" . org-roam-node-find)
@@ -546,7 +556,9 @@
  '(idris-interpreter-path "~/.local/bin/idris")
  '(inhibit-startup-screen t)
  '(safe-local-variable-values
-   '((elisp-lint-indent-specs
+   '((slime-default-lisp . nv-sbcl)
+     (slime-default-lisp quote nv-sbcl)
+     (elisp-lint-indent-specs
       (describe . 1)
       (it . 1)
       (thread-first . 0)
