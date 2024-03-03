@@ -96,9 +96,7 @@
   ;; (equal window-system 'pgtk)
   (use-package standard-themes)
   (load-theme 'standard-dark t)
-  (let ((scale (cdr
-                (assoc 'scale-factor
-                       (car (display-monitor-attributes-list))))))
+  (let ((scale (frame-monitor-attribute 'scale-factor)))
     (if (and scale (>= scale 2))
         (set-frame-font "-1ASC-Liberation Mono-regular-normal-normal-*-10-*-*-*-*-0-iso10646-1" nil t)
         (set-frame-font "-1ASC-Liberation Mono-regular-normal-normal-*-12-*-*-*-*-0-iso10646-1" nil t)))))
