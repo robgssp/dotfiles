@@ -61,7 +61,7 @@
   (interactive "*P\nr")
   (sort-regexp-fields reverse "\\S-+" "\\&" beg end))
 
-;;; Disable UI shit
+;;; UI shit
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
@@ -73,6 +73,10 @@
 (setq native-comp-async-report-warnings-errors nil)
 
 (setq visible-bell 1)
+
+(when (equal (system-name) "sandbox")
+  (display-time-mode 1))
+
 (prefer-coding-system 'utf-8)
 
 (xterm-mouse-mode 1)
@@ -554,6 +558,9 @@
 
 ;;; Terraform
 (use-package terraform-mode :defer t)
+
+;;; R
+(use-package ess :defer t)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
