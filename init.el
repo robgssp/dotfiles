@@ -161,8 +161,10 @@
   :bind (:map global-map
          ("C-c g" . ripgrep-regexp)))
 
-(use-package git-commit :defer t)
-(use-package magit :defer t)
+(use-package magit :defer t
+  :config
+  (when (eq system-type 'windows-nt)
+    (setq magit-git-executable "c:/Program Files/git/cmd/git.exe")))
 
 (when (executable-find "direnv")
   (use-package direnv
