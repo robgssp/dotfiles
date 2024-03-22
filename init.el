@@ -89,8 +89,9 @@
  ((and (cl-equalp (system-name) "saturn")
        (eq system-type 'windows-nt))
 
-  (load-theme 'tango-dark t)
-  (set-frame-font "Terminus-12" nil t))
+  (use-package standard-themes)
+  (load-theme 'standard-dark t)
+  (set-frame-font "Terminus-13" nil t))
 
  (t
   ;; (equal window-system 'pgtk)
