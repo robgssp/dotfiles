@@ -204,11 +204,11 @@
 
 ;;; C/C++ LSP
 (use-package external-completion :defer t)
-(use-package eglot
-  :hook ((c-mode . eglot-ensure)
-         (c++-mode . eglot-ensure))
-  :config
-  (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd")))
+;; (use-package eglot
+;;   :hook ((c-mode . eglot-ensure)
+;;          (c++-mode . eglot-ensure))
+;;   :config
+;;   (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd")))
 
 ;;; KDE-specific
 (use-package qml-mode :defer t)
