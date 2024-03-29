@@ -149,6 +149,11 @@
   :hook ((after-init . global-company-mode)
          (org-mode . (lambda () (company-mode -1)))))
 
+;; S-TAB to complete with the multi-element fuzzy match
+;; C-. / C-, to cycle completions
+(icomplete-mode)
+(icomplete-vertical-mode)
+
 ;;; Spell-check
 (when (eq system-type 'windows-nt)
   (setq ispell-program-name "C:/msys64/mingw64/bin/hunspell.exe")
