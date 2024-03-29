@@ -380,7 +380,8 @@
 
   (add-to-list 'org-tags-exclude-from-inheritance "project")
 
-  (require 'org-id))
+  (require 'org-id)
+  (require 'org-mouse))
 
 (auto-save-visited-mode 1)
 (setq-default auto-save-visited-mode nil)
