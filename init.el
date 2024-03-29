@@ -76,6 +76,14 @@
 (prefer-coding-system 'utf-8)
 
 (xterm-mouse-mode 1)
+
+(defun reset-font-size ()
+  (interactive)
+  (let ((scale (frame-monitor-attribute 'scale-factor)))
+    (if (and scale (>= scale 2))
+        (set-frame-font "-1ASC-Liberation Mono-regular-normal-normal-*-10-*-*-*-*-0-iso10646-1" nil t)
+        (set-frame-font "-1ASC-Liberation Mono-regular-normal-normal-*-12-*-*-*-*-0-iso10646-1" nil t))))
+
 ;; visible-cursor makes the cursor some terminal-defined definition of
 ;; "extra visible". Under alacritty it blinks which is a little
 ;; annoying.
@@ -96,10 +104,7 @@
   ;; (equal window-system 'pgtk)
   (use-package standard-themes)
   (load-theme 'standard-dark t)
-  (let ((scale (frame-monitor-attribute 'scale-factor)))
-    (if (and scale (>= scale 2))
-        (set-frame-font "-1ASC-Liberation Mono-regular-normal-normal-*-10-*-*-*-*-0-iso10646-1" nil t)
-        (set-frame-font "-1ASC-Liberation Mono-regular-normal-normal-*-12-*-*-*-*-0-iso10646-1" nil t)))))
+  (reset-font-size)))
 
 ;;; Fixed tabs globally
 (setq-default indent-tabs-mode nil)
