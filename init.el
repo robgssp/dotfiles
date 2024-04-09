@@ -156,6 +156,8 @@
 
 ;; S-TAB to complete with the multi-element fuzzy match
 ;; C-. / C-, to cycle completions
+;; C-j selects the first completion and finishes, M-TAB selects
+;; and continues editing
 (icomplete-mode)
 (icomplete-vertical-mode)
 
