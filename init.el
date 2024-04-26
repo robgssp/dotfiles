@@ -76,6 +76,14 @@
 (prefer-coding-system 'utf-8)
 
 (xterm-mouse-mode 1)
+
+(defun reset-font-size ()
+  (interactive)
+  (let ((scale (frame-monitor-attribute 'scale-factor)))
+    (if (and scale (>= scale 2))
+        (set-frame-font "-1ASC-Liberation Mono-regular-normal-normal-*-10-*-*-*-*-0-iso10646-1" nil t)
+        (set-frame-font "-1ASC-Liberation Mono-regular-normal-normal-*-12-*-*-*-*-0-iso10646-1" nil t))))
+
 ;; visible-cursor makes the cursor some terminal-defined definition of
 ;; "extra visible". Under alacritty it blinks which is a little
 ;; annoying.
@@ -97,10 +105,7 @@
   ;; (equal window-system 'pgtk)
   (use-package standard-themes)
   (load-theme 'standard-dark t)
-  (let ((scale (frame-monitor-attribute 'scale-factor)))
-    (if (and scale (>= scale 2))
-        (set-frame-font "-1ASC-Liberation Mono-regular-normal-normal-*-10-*-*-*-*-0-iso10646-1" nil t)
-        (set-frame-font "-1ASC-Liberation Mono-regular-normal-normal-*-12-*-*-*-*-0-iso10646-1" nil t)))))
+  (reset-font-size)))
 
 ;;; Fixed tabs globally
 (setq-default indent-tabs-mode nil)
@@ -150,6 +155,13 @@
   :hook ((after-init . global-company-mode)
          (org-mode . (lambda () (company-mode -1)))))
 
+;; S-TAB to complete with the multi-element fuzzy match
+;; C-. / C-, to cycle completions
+;; C-j selects the first completion and finishes, M-TAB selects
+;; and continues editing
+(icomplete-mode)
+(icomplete-vertical-mode)
+
 ;;; Spell-check
 (when (eq system-type 'windows-nt)
   (setq ispell-program-name "C:/msys64/mingw64/bin/hunspell.exe")
@@ -197,11 +209,11 @@
 
 ;;; C/C++ LSP
 (use-package external-completion :defer t)
-(use-package eglot
-  :hook ((c-mode . eglot-ensure)
-         (c++-mode . eglot-ensure))
-  :config
-  (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd")))
+;; (use-package eglot
+;;   :hook ((c-mode . eglot-ensure)
+;;          (c++-mode . eglot-ensure))
+;;   :config
+;;   (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd")))
 
 ;;; KDE-specific
 (use-package qml-mode :defer t)
@@ -383,7 +395,8 @@
 
   (add-to-list 'org-tags-exclude-from-inheritance "project")
 
-  (require 'org-id))
+  (require 'org-id)
+  (require 'org-mouse))
 
 (auto-save-visited-mode 1)
 (setq-default auto-save-visited-mode nil)
