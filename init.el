@@ -581,7 +581,14 @@
  '(idris-interpreter-path "~/.local/bin/idris")
  '(inhibit-startup-screen t)
  '(safe-local-variable-values
-   '((slime-default-lisp . nv-sbcl)
+   '((Package . NUM-UTILS\.ELEMENTWISE)
+     (Package . DATA-FRAME)
+     (Syntax . ANSI-Common-Lisp)
+     (Package . LS-USER)
+     (Package . VEGA)
+     (Base . 10)
+     (Syntax . Ansi-Common-Lisp)
+     (slime-default-lisp . nv-sbcl)
      (slime-default-lisp quote nv-sbcl)
      (elisp-lint-indent-specs
       (describe . 1)
