@@ -119,6 +119,10 @@
 ;;(setq-default fill-column 80)
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 
+;;; Highlight whitespace in prog and text modes (not terminal modes)
+(add-hook 'text-mode-hook (lambda () '(show-trailing-whitespace t)))
+(add-hook 'prog-mode-hook (lambda () '(show-trailing-whitespace t)))
+
 (defun maximize-window-save ()
   (interactive ())
   (window-configuration-to-register ?1)
@@ -604,7 +608,6 @@
      (eval c-set-offset 'innamespace 0)
      (indicate-empty-lines . t)
      (c-block-comment-prefix . "  ")))
- '(show-trailing-whitespace t)
  '(vc-follow-symlinks t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
