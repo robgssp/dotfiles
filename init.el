@@ -120,8 +120,8 @@
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 
 ;;; Highlight whitespace in prog and text modes (not terminal modes)
-(add-hook 'text-mode-hook (lambda () '(show-trailing-whitespace t)))
-(add-hook 'prog-mode-hook (lambda () '(show-trailing-whitespace t)))
+(add-hook 'text-mode-hook (lambda () (setq show-trailing-whitespace t)))
+(add-hook 'prog-mode-hook (lambda () (setq show-trailing-whitespace t)))
 
 (defun maximize-window-save ()
   (interactive ())
