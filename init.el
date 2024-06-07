@@ -407,7 +407,18 @@
   (add-to-list 'org-tags-exclude-from-inheritance "project")
 
   (require 'org-id)
-  (require 'org-mouse))
+  (require 'org-mouse)
+
+  (setq org-ditaa-jar-path "~/.nix-profile/lib/ditaa.jar")
+
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((lisp . t)
+     (ditaa . t)))
+
+  (defun my-org-confirm-babel-evaluate (lang body)
+    (not (string= lang "ditaa")))
+  (setq org-confirm-babel-evaluate #'my-org-confirm-babel-evaluate))
 
 (auto-save-visited-mode 1)
 (setq-default auto-save-visited-mode nil)
