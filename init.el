@@ -252,10 +252,6 @@
 
 ;;; SLIME setup
 (use-package slime
-  :bind (:map slime-mode-map
-              ("C-<tab>" . slime-complete-symbol)
-              :map slime-editing-map
-              ("C-<tab>" . slime-complete-symbol))
   :init
   (setq-default inferior-lisp-program "sbcl")
   (setq-default slime-lisp-implementations
