@@ -9,6 +9,13 @@
        (progn ,@body)
      ('error (message "%s failed." '(progn ,@body)))))
 
+(defmacro measure-time (&rest body)
+  "Measure the time it takes to evaluate BODY."
+  `(let ((time (current-time)))
+     (prog1
+         (progn ,@body)
+       (message "%.06f elapsed" (float-time (time-since time))))))
+
 ;;; Packages
 (setq straight-use-package-by-default t)
 (setq straight-check-for-modifications '(check-on-save find-when-checking))
