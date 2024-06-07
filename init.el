@@ -456,8 +456,8 @@
   (org-roam-dailies-directory "journals/")
   (org-roam-capture-templates
    '(("d" "default" plain
-      "%?" :target
-      (file+head "pages/${slug}.org" "#+title: ${title}\n")
+      "%?"
+      :target (file+head "pages/${slug}.org" "#+title: ${title}\n")
       :unnarrowed t)))
   ;; (org-capture-templates
   ;;  '(("n" "note" entry (file "pages/${slug}.org")
@@ -465,6 +465,13 @@
   (org-startup-folded 'nofold)
 
   :init
+
+  (setq org-roam-dailies-capture-templates
+   `(("d" "default" entry
+      "* %?"
+      :target (file+head "%<%Y/%m-%d>.org"
+                         "#+title: %<%Y-%m-%d>\n")
+      :unnarrowed t)))
 
   ;; Hack: logseq sticks backup files in the roam directory. Filter
   ;; them out of org's file list.
