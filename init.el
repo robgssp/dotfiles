@@ -145,6 +145,12 @@
 (global-set-key (kbd "<f13>") 'ignore)
 ;; (global-set-key (kbd "C-c w") 'maximize-window-save)
 
+(global-set-key (kbd "C-c f d")
+                (lambda ()
+                  "Diff buffer with current file"
+                  (interactive)
+                  (diff-buffer-with-file)))
+
 ;;; Binds S-<arrow-keys> to move between windows
 (windmove-default-keybindings)
 (global-set-key (kbd "C-c w f") 'windmove-right)
@@ -164,7 +170,7 @@
 
 (use-package transpose-frame
   :bind (:map global-map
-              ("C-c f" . transpose-frame)))
+              ("C-c t" . transpose-frame)))
 
 (use-package company
   :hook ((after-init . global-company-mode)
@@ -195,6 +201,8 @@
 
 (when (executable-find "direnv")
   (use-package direnv
+    :bind (:map global-map
+                ("C-c e v" . direnv-update-environment))
     :config
     (direnv-mode)))
 
