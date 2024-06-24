@@ -469,7 +469,7 @@
   (setq org-roam-dailies-capture-templates
    `(("d" "default" entry
       "* %?"
-      :target (file+head "%<%Y/%m-%d>.org"
+      :target (file+head "%<%Y-%m-%d>.org"
                          "#+title: %<%Y-%m-%d>\n")
       :unnarrowed t)))
 
