@@ -555,6 +555,104 @@
 
 (advice-add 'org-agenda :before #'rob/agenda-files-update)
 
+;;; Diet tracker
+
+(cl-defun rob/weights (&key (history (* 6 30)))
+  "Scrape weights from recent notes"
+  (let ((weights))
+    (dolist (file (org-roam-dailies--list-files))
+      (when (string-match (rx "/"
+                              (group (= 4 digit)) anychar
+                              (group (= 2 digit)) anychar
+                              (group (= 2 digit))
+                              ".org"
+                              eol)
+                          file)
+        (let* ((date (format "%s-%s-%s"
+                             (match-string 1 file)
+                             (match-string 2 file)
+                             (match-string 3 file)))
+               (datestamp (date-to-time date)))
+          (when (> (time-to-days datestamp)
+                   (- (time-to-days (current-time))
+                      history))
+            (let ((weight (rob/weight-from-file file)))
+              (when weight (push (list date weight) weights)))))))
+    (reverse weights)))
+
+(defun rob/weight-from-file (file)
+  "Extract the weight from a given org file, if given"
+  (with-temp-buffer
+    (insert-file-contents file)
+    (car
+     (org-element-map (org-element-parse-buffer 'headline) 'headline
+       (lambda (headline)
+         (when (cl-equalp (org-element-property :title headline) "health")
+           (goto-char (org-element-property :begin headline))
+           (when (re-search-forward
+                  "^weight: \\([.[:digit:]]+\\)$"
+                  (org-element-property :end headline)
+                  t)
+             (string-to-number (match-string 1)))))))))
+
+(defun rob/average-weights (weights)
+  "Compute a running average of weights by day, filling in non-sampled days with NIL and the previous average"
+  (let ((day (time-to-days (date-to-time (caar weights)))))
+    (cl-labels
+        ((iter (day weights average)
+           (cond
+            ((> day (time-to-days (current-time)))
+             nil)
+            ((= day (time-to-days (date-to-time (caar weights))))
+             (let* ((decay 0.8)
+                    (average1 (+ (* average decay)
+                                 (* (cadar weights) (- 1 decay)))))
+               (cons (list (caar weights) (cadar weights) average1)
+                     (iter (+ day 1)
+                           (cdr weights)
+                           average1))))
+            (t
+             (iter (+ day 1)
+                   weights
+                   average)))))
+      (iter (time-to-days (date-to-time (caar weights)))
+            weights
+            (cadar weights)))))
+
+(defun rob/plot-weights ()
+  "Plot weights and insert a link at cursor"
+  (interactive)
+  (let ((graph (format-time-string "./weight-%F.png" (current-time))))
+    (save-excursion
+      (let ((weights (rob/average-weights (rob/weights)))
+            (datafile (make-temp-file "weights"))
+            (gnuplot (start-process "gnuplot" "*gnuplot weights*" "gnuplot")))
+        (with-temp-file datafile
+          (dolist (weight weights)
+            (pcase weight
+              (`(,date ,weight ,average)
+               (insert (format "%s %s %s\n"
+                               date
+                               (if weight weight "?")
+                               average))))))
+
+        (cl-flet ((send (s) (process-send-string gnuplot (format "%s\n" s))))
+          (send "set term png")
+          (send (format "set output %S" graph))
+
+          (send "unset logscale")
+          (send "set grid")
+
+          (send "set xdata time")
+          (send "set timefmt \"%Y-%m-%d\"")
+
+          (send (format "plot %S using 1:2 with points title 'weights', %S using 1:3 with lines title 'average'"
+                        datafile datafile))
+
+          (send "quit"))))
+    (insert (format "[[%s]]" graph))))
+
+;;; Anki
 (use-package org-anki
   :defer t)
 
