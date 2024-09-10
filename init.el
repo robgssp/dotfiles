@@ -445,7 +445,6 @@
 (use-package org-roam
   :defer t
   :bind (:map global-map
-         ("C-c l" . org-store-link)
          ;; TODO list: C-C a t
          ("C-c a" . org-agenda)
          ("C-c c" . org-capture)
@@ -726,7 +725,9 @@
  '(idris-interpreter-path "~/.local/bin/idris")
  '(inhibit-startup-screen t)
  '(safe-local-variable-values
-   '((eval progn
+   '((Package . BORDEAUX-THREADS-2)
+     (Syntax . ANSI-Common-lisp)
+     (eval progn
            (require 'lisp-mode)
            (defun emacs27-lisp-fill-paragraph
                (&optional justify)
