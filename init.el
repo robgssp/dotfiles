@@ -459,6 +459,7 @@
          ("C-c d c" . org-roam-dailies-goto-date)
          ("C-c d n" . org-roam-dailies-goto-next-note)
          ("C-c d p" . org-roam-dailies-goto-previous-note)
+         ("C-c l d" . rob/log-drug)
          :map minibuffer-local-completion-map
          ("SPC" . self-insert-command)
          :map org-mode-map
@@ -511,7 +512,16 @@
                   (display-buffer-in-direction)
                   (direction . right)
                   (window-width . 0.33)
-                  (window-height . fit-window-to-buffer))))
+                  (window-height . fit-window-to-buffer)))
+
+  (defun rob/log-drug ()
+  (interactive (list))
+  (save-excursion
+    (org-roam-node-visit (org-roam-node-from-title-or-alias "Drugs"))
+    (goto-char (point-max))
+    (let* ((drug (read-string "Drug: "))
+           (time (read-string "Time: " (format-time-string "%d%b%Y %H%M"))))
+      (insert time ": " drug "\n")))))
 
 ;; todo tracking machinery. Copied from https://d12frosted.io/posts/2021-01-16-task-management-with-roam-vol5.html
 
