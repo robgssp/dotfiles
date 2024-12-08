@@ -240,11 +240,11 @@
 
 ;;; C/C++ LSP
 (use-package external-completion :defer t)
-;; (use-package eglot
-;;   :hook ((c-mode . eglot-ensure)
-;;          (c++-mode . eglot-ensure))
-;;   :config
-;;   (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd")))
+
+(defun c-keybinds ()
+  (define-key c-mode-base-map (kbd "C-c >") 'lsp-find-references))
+
+(add-hook 'c-initialization-hook 'c-keybinds)
 
 ;;; KDE-specific
 (use-package qml-mode :defer t)
@@ -694,7 +694,9 @@
 (use-package powershell :defer t)
 
 (use-package lsp-mode
-  :hook (rust-mode . lsp))
+  :hook ((rust-mode . lsp)
+         (c-mode . lsp)
+         (c++-mode . lsp)))
 
 ;;; Gnus
 (use-package gnus :defer t)
