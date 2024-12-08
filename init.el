@@ -736,7 +736,8 @@
  '(idris-interpreter-path "~/.local/bin/idris")
  '(inhibit-startup-screen t)
  '(safe-local-variable-values
-   '((Package . BORDEAUX-THREADS-2)
+   '((TeX-engine . lualatex)
+     (Package . BORDEAUX-THREADS-2)
      (Syntax . ANSI-Common-lisp)
      (eval progn
            (require 'lisp-mode)
