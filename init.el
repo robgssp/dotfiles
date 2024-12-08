@@ -249,6 +249,9 @@
 ;;; KDE-specific
 (use-package qml-mode :defer t)
 
+;;; Meson
+(use-package meson-mode :defer t)
+
 ;;; Mail
 ;; LOLNO: requires "meson" to build
 ;; (use-package mu4e)
