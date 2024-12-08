@@ -514,13 +514,13 @@
                   (window-height . fit-window-to-buffer)))
 
   (defun rob/log-drug ()
-  (interactive (list))
-  (save-excursion
-    (org-roam-node-visit (org-roam-node-from-title-or-alias "Drugs"))
-    (goto-char (point-max))
-    (let* ((drug (read-string "Drug: "))
-           (time (read-string "Time: " (format-time-string "%d%b%Y %H%M"))))
-      (insert time ": " drug "\n")))))
+    (interactive (list))
+    (save-excursion
+      (org-roam-node-visit (org-roam-node-from-title-or-alias "Drugs"))
+      (goto-char (point-max))
+      (let* ((drug (read-string "Drug: "))
+             (time (read-string "Time: " (format-time-string "%d%b%Y %H%M"))))
+        (insert time ": " drug "\n")))))
 
 ;; todo tracking machinery. Copied from https://d12frosted.io/posts/2021-01-16-task-management-with-roam-vol5.html
 
