@@ -273,6 +273,9 @@
 
 ;;; SLIME setup
 (use-package slime
+  :bind (:map lisp-mode-map
+              ("C-c s l" . slime-load-system)
+              ("C-c s r" . slime-reload-system))
   :init
   (setq-default inferior-lisp-program "sbcl")
   (setq-default slime-lisp-implementations
