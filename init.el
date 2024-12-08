@@ -182,7 +182,7 @@
 
 (use-package company
   :hook ((after-init . global-company-mode)
-         (org-mode . (lambda () (company-mode -1)))))
+         (text-mode . (lambda () (company-mode -1)))))
 
 ;; S-TAB to complete with the multi-element fuzzy match
 ;; C-. / C-, to cycle completions
