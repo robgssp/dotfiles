@@ -178,7 +178,9 @@
               ("C->" . mc/mark-next-like-this)
               ("C-<" . mc/mark-previous-like-this)
               ("C-c C->" . mc/mark-all-like-this)
-              ("C-c m d" . mc/mark-all-dwim)))
+              ("C-c m d" . mc/mark-all-dwim)
+         :map mc/keymap
+              ("<return>" . nil)))
 
 (use-package company
   :hook ((after-init . global-company-mode)
