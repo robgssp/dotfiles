@@ -16,8 +16,22 @@
          (progn ,@body)
        (message "%.06f elapsed" (float-time (time-since time))))))
 
+(defun linux-distro ()
+  (save-excursion
+    (let ((buf (find-file-noselect "/etc/os-release")))
+      (with-current-buffer buf
+        (beginning-of-buffer)
+        (re-search-forward "^id=\\(.*\\)$")
+        (match-string 1)))))
+
 ;;; Packages
-(setq straight-use-package-by-default t)
+;; Use `standard-themes` as a sentinel to determine whether packages have been preloaded.
+(setq straight-use-package-by-default
+      (condition-case err
+          (progn (require 'standard-themes)
+                 nil)
+        ('error t)))
+
 (setq straight-check-for-modifications '(check-on-save find-when-checking))
 
 (defvar bootstrap-version)
@@ -33,7 +47,7 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-(straight-use-package 'use-package)
+(require 'use-package)
 
 ;;; Fix whole file's indent
 (defun indent-buffer ()
