@@ -236,6 +236,12 @@
   :bind (:map global-map
               ("C-c i" . string-inflection-cycle)))
 
+(setq world-clock-list
+      '(("UTC" "UTC")
+        ("America/New_York" "Boston")
+        ("America/Los_Angeles" "San Francisco")
+        ("Etc/GMT-3" "Boat")))
+
 ;;; C Formatting
 (setq c-basic-offset 8)
 
