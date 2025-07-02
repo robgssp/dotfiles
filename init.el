@@ -292,11 +292,12 @@
               ("C-c s r" . slime-reload-system))
   :init
   (setq-default inferior-lisp-program "sbcl")
-  (setq-default slime-lisp-implementations
-                '((sbcl ("sbcl" "--dynamic-space-size" "16Gb"))
-                  (nv-sbcl ("nvidia-run" "sbcl" "--dynamic-space-size" "16Gb"))))
+  ;; (setq-default slime-lisp-implementations
+  ;;               '((sbcl ("sbcl" "--dynamic-space-size" "16Gb"))
+  ;;                 (nv-sbcl ("nvidia-run" "sbcl" "--dynamic-space-size" "16Gb"))))
   (setq-default slime-default-lisp 'sbcl)
-  (setq-default slime-contribs '(slime-fancy slime-asdf slime-scratch slime-mrepl)))
+  (setq-default slime-contribs '(slime-fancy slime-asdf slime-scratch slime-mrepl
+                                 slime-presentation-streams)))
 
 ;;; Hexl Mode
 (add-hook 'hexl-mode-hook
