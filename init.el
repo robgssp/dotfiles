@@ -315,10 +315,6 @@
 (use-package geiser-guile :defer t)
 
 ;;; Haskell setup
-(use-package hindent
-  :defer t
-  :hook (haskell-mode . hindent-mode))
-
 (use-package haskell-mode
   :defer t
   :bind (:map haskell-mode-map
