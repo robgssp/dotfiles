@@ -263,10 +263,15 @@
 ;;; C/C++ LSP
 (use-package external-completion :defer t)
 
-(defun c-keybinds ()
-  (define-key c-mode-base-map (kbd "C-c >") 'lsp-find-references))
+;; (defun c-keybinds ()
+;;   (define-key c-mode-base-map (kbd "C-c >") 'lsp-find-references))
 
-(add-hook 'c-initialization-hook 'c-keybinds)
+;; (add-hook 'c-initialization-hook 'c-keybinds)
+
+;; (use-package lsp-mode
+;;   :hook ((rust-mode . lsp)
+;;          (c-mode . lsp)
+;;          (c++-mode . lsp)))
 
 ;;; KDE-specific
 (use-package qml-mode :defer t)
@@ -714,11 +719,6 @@
 
 ;;; Powershell
 (use-package powershell :defer t)
-
-(use-package lsp-mode
-  :hook ((rust-mode . lsp)
-         (c-mode . lsp)
-         (c++-mode . lsp)))
 
 ;;; Gnus
 (use-package gnus :defer t)
