@@ -746,39 +746,74 @@
  ;; If there is more than one, they won't work right.
  '(canlock-password "a3979c726470bbc6fec6c7f21c32906a234548b7")
  '(custom-safe-themes
-   '("d8bcb88ef0a3259a38d6deba78e569c0750ebfede82ad3e6da16573419fef48c" "6198e96f1fd7de3889a1b6ab8be1fc9b7c734cc9db0b0f16b635a2974601f977" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" default))
+   '("d8bcb88ef0a3259a38d6deba78e569c0750ebfede82ad3e6da16573419fef48c"
+     "6198e96f1fd7de3889a1b6ab8be1fc9b7c734cc9db0b0f16b635a2974601f977"
+     "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26"
+     default))
  '(epg-pinentry-mode 'loopback)
  '(erc-modules
-   '(autojoin button completion fill irccontrols list match menu move-to-prompt netsplit networks noncommands readonly ring stamp track))
+   '(autojoin button completion fill irccontrols list match menu
+              move-to-prompt netsplit networks noncommands readonly
+              ring stamp track))
  '(geiser-repl-read-only-prompt-p nil)
  '(hindent-style "chris-done")
  '(idris-interpreter-path "~/.local/bin/idris")
  '(inhibit-startup-screen t)
  '(safe-local-variable-values
-   '((TeX-engine . lualatex)
-     (Package . BORDEAUX-THREADS-2)
+   '((bug-reference-url-format lambda nil
+                               (format
+                                "https://codeberg.org/emacs-jj-vc/vc-jj.el/%s/%s"
+                                (if
+                                    (member (match-string 2)
+                                            '("pr" "PR" "pull" "Pull"
+                                              "PULL"))
+                                    "pulls"
+                                  "issues")
+                                (match-string 3)))
+     (geiser-guile-binary "guix" "repl")
+     (geiser-guile-binary quote ("guix" "repl"))
+     (geiser-guile-binary . "guix repl")
+     (lisp-fill-paragraphs-as-doc-string nil)
+     (geiser-insert-actual-lambda)
+     (eval with-eval-after-load 'tempel
+           (if (stringp tempel-path)
+               (setq tempel-path (list tempel-path)))
+           (let
+               ((guix-tempel-snippets
+                 (concat
+                  (expand-file-name "etc/snippets/tempel"
+                                    (locate-dominating-file
+                                     default-directory
+                                     ".dir-locals.el"))
+                  "/*.eld")))
+             (unless (member guix-tempel-snippets tempel-path)
+               (add-to-list 'tempel-path guix-tempel-snippets))))
+     (eval with-eval-after-load 'git-commit
+           (add-to-list 'git-commit-trailers "Change-Id"))
+     (TeX-engine . lualatex) (Package . BORDEAUX-THREADS-2)
      (Syntax . ANSI-Common-lisp)
-     (eval progn
-           (require 'lisp-mode)
-           (defun emacs27-lisp-fill-paragraph
-               (&optional justify)
+     (eval progn (require 'lisp-mode)
+           (defun emacs27-lisp-fill-paragraph (&optional justify)
              (interactive "P")
-             (or
-              (fill-comment-paragraph justify)
-              (let
-                  ((paragraph-start
-                    (concat paragraph-start "\\|\\s-*\\([(;\"]\\|\\s-:\\|`(\\|#'(\\)"))
-                   (paragraph-separate
-                    (concat paragraph-separate "\\|\\s-*\".*[,\\.]$"))
-                   (fill-column
-                    (if
-                        (and
-                         (integerp emacs-lisp-docstring-fill-column)
-                         (derived-mode-p 'emacs-lisp-mode))
-                        emacs-lisp-docstring-fill-column fill-column)))
-                (fill-paragraph justify))
-              t))
-           (setq-local fill-paragraph-function #'emacs27-lisp-fill-paragraph))
+             (or (fill-comment-paragraph justify)
+                 (let
+                     ((paragraph-start
+                       (concat paragraph-start
+                               "\\|\\s-*\\([(;\"]\\|\\s-:\\|`(\\|#'(\\)"))
+                      (paragraph-separate
+                       (concat paragraph-separate
+                               "\\|\\s-*\".*[,\\.]$"))
+                      (fill-column
+                       (if
+                           (and
+                            (integerp emacs-lisp-docstring-fill-column)
+                            (derived-mode-p 'emacs-lisp-mode))
+                           emacs-lisp-docstring-fill-column
+                         fill-column)))
+                   (fill-paragraph justify))
+                 t))
+           (setq-local fill-paragraph-function
+                       #'emacs27-lisp-fill-paragraph))
      (eval modify-syntax-entry 43 "'")
      (eval modify-syntax-entry 36 "'")
      (eval modify-syntax-entry 126 "'")
@@ -787,36 +822,27 @@
            (let
                ((guix-yasnippets
                  (expand-file-name "etc/snippets/yas"
-                                   (locate-dominating-file default-directory ".dir-locals.el"))))
-             (unless
-                 (member guix-yasnippets yas-snippet-dirs)
+                                   (locate-dominating-file
+                                    default-directory ".dir-locals.el"))))
+             (unless (member guix-yasnippets yas-snippet-dirs)
                (add-to-list 'yas-snippet-dirs guix-yasnippets)
                (yas-reload-all))))
      (eval setq-local guix-directory
            (locate-dominating-file default-directory ".dir-locals.el"))
      (eval add-to-list 'completion-ignored-extensions ".go")
-     (Package . NUM-UTILS.ELEMENTWISE)
-     (Package . DATA-FRAME)
-     (Syntax . ANSI-Common-Lisp)
-     (Package . LS-USER)
-     (Package . VEGA)
-     (Base . 10)
-     (Syntax . Ansi-Common-Lisp)
-     (slime-default-lisp . nv-sbcl)
-     (slime-default-lisp quote nv-sbcl)
-     (elisp-lint-indent-specs
-      (describe . 1)
-      (it . 1)
-      (thread-first . 0)
-      (cl-flet . 1)
-      (cl-flet* . 1)
-      (org-element-map . defun)
-      (org-roam-dolist-with-progress . 2)
-      (org-roam-with-temp-buffer . 1)
-      (org-with-point-at . 1)
-      (magit-insert-section . defun)
-      (magit-section-case . 0)
-      (org-roam-with-file . 2))
+     (Package . NUM-UTILS.ELEMENTWISE) (Package . DATA-FRAME)
+     (Syntax . ANSI-Common-Lisp) (Package . LS-USER) (Package . VEGA)
+     (Base . 10) (Syntax . Ansi-Common-Lisp)
+     (slime-default-lisp . nv-sbcl) (slime-default-lisp quote nv-sbcl)
+     (elisp-lint-indent-specs (describe . 1) (it . 1)
+                              (thread-first . 0) (cl-flet . 1)
+                              (cl-flet* . 1) (org-element-map . defun)
+                              (org-roam-dolist-with-progress . 2)
+                              (org-roam-with-temp-buffer . 1)
+                              (org-with-point-at . 1)
+                              (magit-insert-section . defun)
+                              (magit-section-case . 0)
+                              (org-roam-with-file . 2))
      (elisp-lint-ignored-validators "byte-compile" "package-lint")
      (eval c-set-offset 'inlambda 0)
      (eval c-set-offset 'access-label '-)
@@ -826,8 +852,7 @@
      (eval c-set-offset 'arglist-intro '+)
      (eval c-set-offset 'inline-open 0)
      (eval c-set-offset 'defun-open 0)
-     (eval c-set-offset 'innamespace 0)
-     (indicate-empty-lines . t)
+     (eval c-set-offset 'innamespace 0) (indicate-empty-lines . t)
      (c-block-comment-prefix . "  ")))
  '(vc-follow-symlinks t))
 (custom-set-faces
