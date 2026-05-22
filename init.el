@@ -225,6 +225,8 @@
   (when (eq system-type 'windows-nt)
     (setq magit-git-executable "c:/Program Files/git/cmd/git.exe")))
 
+(use-package vc-jj :defer t)
+
 (when (executable-find "direnv")
   (use-package direnv
     :bind (:map global-map
