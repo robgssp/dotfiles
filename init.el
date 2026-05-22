@@ -1,4 +1,4 @@
-; -*- emacs-lisp -*-
+; -*-  mode: emacs-lisp; lexical-binding: t;  -*-
 (require 'cl-lib)
 
 ;;; Error handling for the terminally lazy.
