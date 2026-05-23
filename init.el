@@ -1,4 +1,7 @@
 ; -*-  mode: emacs-lisp; lexical-binding: t;  -*-
+(message "Loading init.el!")
+(setq init-start-time (float-time))
+;; (profiler-start 'cpu)
 (require 'cl-lib)
 
 ;;; Error handling for the terminally lazy.
@@ -867,3 +870,7 @@
 
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
+
+(profiler-stop)
+(message "init.el took %fs" (- (float-time) init-start-time))
+(message "full init took %fs" (- (float-time) full-init-start-time))
