@@ -209,6 +209,13 @@
 (icomplete-mode)
 (icomplete-vertical-mode)
 
+;;; Bugfix for #81320
+(defun toggle-frame-fullscreen-fix (orig &optional frame &rest args)
+  (if (memq (frame-parameter frame 'fullscreen) '(fullscreen fullboth))
+      (set-frame-parameter frame 'fullscreen nil)
+    (apply orig frame args)))
+(advice-add 'toggle-frame-fullscreen :around #'toggle-frame-fullscreen-fix)
+
 ;;; Spell-check
 (when (eq system-type 'windows-nt)
   (setq ispell-program-name "C:/msys64/mingw64/bin/hunspell.exe")
