@@ -1,1 +1,3 @@
-(setq package-enable-at-startup nil)
+; -*-  mode: emacs-lisp; lexical-binding: t;  -*-
+
+(setq package-quickstart t)
