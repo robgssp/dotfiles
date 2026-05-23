@@ -735,6 +735,25 @@
       user-full-name "Rob Glossop"
       user-mail-address "robgssp@gmail.com")
 
+;;; Elfeed
+(use-package elfeed :defer t
+  :commands elfeed
+  :init
+  (setq elfeed-db-directory "~/Documents/org/elfeed")
+  (setq elfeed-feeds
+        '(("https://bam.kalzumeus.com/archive/rss/" tech blogs)
+          ("https://lwn.net/headlines/rss" tech)
+          ("https://tymoon.eu/api/reader/atom" tech blogs)
+          ("https://worm-blossom.org/rss.xml" tech blogs)
+          ("https://chipsandcheese.com/feed" tech blogs)
+          ("https://rachelbythebay.com/w/atom.xml" tech blogs)
+
+          ("https://guix.gnu.org/feeds/blog.atom" tech projects)
+          ("https://www.gnu.org/software/hurd/index.rss" tech projects)
+
+          ("https://www.theguardian.com/us/rss" news)
+          ("https://feeds.npr.org/1001/rss.xml" news))))
+
 ;;; Terraform
 (use-package terraform-mode :defer t)
 
