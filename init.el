@@ -210,11 +210,15 @@
 (icomplete-vertical-mode)
 
 ;;; Bugfix for #81320
-(defun toggle-frame-fullscreen-fix (orig &optional frame &rest args)
-  (if (memq (frame-parameter frame 'fullscreen) '(fullscreen fullboth))
-      (set-frame-parameter frame 'fullscreen nil)
-    (apply orig frame args)))
-(advice-add 'toggle-frame-fullscreen :around #'toggle-frame-fullscreen-fix)
+;; (defun toggle-frame-fullscreen-fix (orig &optional frame &rest args)
+;;   (if (memq (frame-parameter frame 'fullscreen) '(fullscreen fullboth))
+;;       (set-frame-parameter frame 'fullscreen nil)
+;;     (apply orig frame args)))
+;; (advice-add 'toggle-frame-fullscreen :around #'toggle-frame-fullscreen-fix)
+
+(defun display-ansi-colors ()
+  (interactive)
+  (ansi-color-apply-on-region (point-min) (point-max)))
 
 ;;; Spell-check
 (when (eq system-type 'windows-nt)
@@ -238,8 +242,9 @@
   (use-package direnv
     :bind (:map global-map
                 ("C-c e v" . direnv-update-environment))
-    :config
-    (direnv-mode)))
+    ;; :config
+    ;; (direnv-mode)
+    ))
 
 ;;; CASE_CONVERSION <-> CaseConversion
 (use-package string-inflection
@@ -425,6 +430,9 @@
 
 (use-package rainbow-delimiters
   :hook (clojure-mode . rainbow-delimiters-mode))
+
+;;; Java/adjacent
+(use-package kotlin :defer t)
 
 ;;; Sisal
 ;; I have no memory of this place
@@ -887,6 +895,7 @@
      (eval c-set-offset 'defun-open 0)
      (eval c-set-offset 'innamespace 0) (indicate-empty-lines . t)
      (c-block-comment-prefix . "  ")))
+ '(trusted-content '("~/proj/brightside/"))
  '(vc-follow-symlinks t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
